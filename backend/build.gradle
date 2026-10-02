@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.6'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.stockai'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // REST API
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // H2 - Phase 1 database
+    runtimeOnly 'com.h2database:h2'
+
+    // Caffeine - Phase 1 cache
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+    // Actuator - health / monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Tests
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
